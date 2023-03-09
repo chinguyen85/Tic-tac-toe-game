@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 from pygame.locals import *
 import time
+import random
 # initialize global variables
 XO = 'x'
 winner = None
@@ -23,18 +24,23 @@ fps = 30
 CLOCK = pg.time.Clock()
 screen = pg.display.set_mode((width, height+100), 0, 32)
 pg.display.set_caption("Tic Tac Toe")
-
+x_img_paths = ['x_r_1.png', 'x_r_2.png', 'x_r_3.png', 'x_r_4.png', ]
+x_img_path = random.choice(x_img_paths)
+o_img_paths = ['o_b_1.png', 'o_b_2.png', 'o_b_3.png', 'o_b_4.png', ]
+o_img_path = random.choice(o_img_paths)
 # loading the images
-opening = pg.image.load('tic tac opening.png')
-x_img = pg.image.load('X.png')
-o_img = pg.image.load('O.png')
-start_button_img = pg.image.load('start_button.png')
+# opening = pg.image.load('tic tac opening.png')
+opening = pg.image.load('Opening_1.jpg')
+x_img = pg.image.load('x_r_1.png')
+o_img = pg.image.load('o_b_1.png')
+# start_button_img = pg.image.load('start_button.png')
+start_button_img = pg.image.load('Play_button2.png')
 
 # resizing images
 x_img = pg.transform.scale(x_img, (80, 80))
 o_img = pg.transform.scale(o_img, (80, 80))
-opening = pg.transform.scale(opening, (width, height+100))
-start_button_img = pg.transform.scale(start_button_img, (140, 60))
+opening = pg.transform.scale(opening, (width, height))
+start_button_img = pg.transform.scale(start_button_img, (width-120, 80))
 start_button_rect = start_button_img.get_rect()
 start_button_rect.bottom = height+60
 start_button_rect.centerx = width // 2
@@ -157,6 +163,12 @@ def check_win():
 
 
 def drawXO(row, col):
+    x_img_path = random.choice(x_img_paths)
+    o_img_path = random.choice(o_img_paths)
+    x_img = pg.image.load(x_img_path)
+    o_img = pg.image.load(o_img_path)
+    x_img = pg.transform.scale(x_img, (80, 80))
+    o_img = pg.transform.scale(o_img, (80, 80))
     global TTT, XO
     if row == 1:
         posx = 30
