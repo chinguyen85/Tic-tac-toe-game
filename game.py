@@ -20,6 +20,9 @@ pg.init()
 pg.mixer.init()
 click_sound = pg.mixer.Sound('click.mp3')
 draw_sound = pg.mixer.Sound('draw.mp3')
+win_sound = pg.mixer.Sound('win.mp3')
+tie_sound = pg.mixer.Sound('tie.mp3')
+
 fps = 30
 CLOCK = pg.time.Clock()
 screen = pg.display.set_mode((width, height+100), 0, 32)
@@ -84,9 +87,12 @@ def draw_status():
         message = XO.upper() + "'s Turn"
     font = pg.font.Font(None, 30)
     text = font.render(message, 1, (255, 255, 255))
-
+    print(XO.upper())
     # copy the rendered message onto the board
-    screen.fill((0, 0, 0), (0, 400, 500, 100))
+    if XO.upper() == 'O':
+        screen.fill((0, 0, 0), (0, 400, 500, 100))
+    else:
+        screen.fill((255, 0, 0), (0, 400, 500, 100))
     text_rect = text.get_rect(center=(width/2, 500-50))
     screen.blit(text, text_rect)
     # pg.display.update()
@@ -144,15 +150,20 @@ def check_win():
     # while(True):
     # print("winner: ", winner, 'draw: ', draw)
     if(winner or draw):
+        color = (0,0,0)
         if winner:
+            color = (60,240,115)
             time.sleep(0.5)
             draw_sound.play()
+            win_sound.play()
             message = winner.upper() + " won!"
         if draw:
+            color = (0,0,0)
             message = 'Game Draw!'
+            tie_sound.play()
         font = pg.font.Font(None, 30)
         text = font.render(message, 1, (255, 255, 255))
-        screen.fill((0, 0, 0), (0, 400, 500, 100))
+        screen.fill(color, (0, 400, 500, 100))
         text_rect = text.get_rect(center=(width/2, 500-50))
         screen.blit(text, text_rect)
         pg.display.update()
